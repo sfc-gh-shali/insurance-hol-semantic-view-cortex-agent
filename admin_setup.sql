@@ -23,7 +23,7 @@
 -- 1. Account prerequisites (ACCOUNTADMIN) -------------------------------------------------
 USE ROLE ACCOUNTADMIN;
 SHOW PARAMETERS LIKE 'CORTEX_ENABLED_CROSS_REGION' IN ACCOUNT;
--- CoCo in Snowsight and the lab's agent model (claude-sonnet-4-6) need cross-region inference.
+-- CoCo in Snowsight and the lab's agent (orchestration model: auto) need cross-region inference.
 -- If the value above is DISABLED, uncomment and choose a scope your data-residency policy allows
 -- (e.g. 'AWS_US', 'AWS_EU', 'ANY_REGION'):
 -- ALTER ACCOUNT SET CORTEX_ENABLED_CROSS_REGION = 'ANY_REGION';
@@ -45,7 +45,7 @@ GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER       TO ROLE HOL_ATTENDEE_ROLE;   -- 
 GRANT DATABASE ROLE SNOWFLAKE.CORTEX_AGENT_USER TO ROLE HOL_ATTENDEE_ROLE;   -- Cortex Agents
 GRANT USE AI FUNCTIONS ON ACCOUNT               TO ROLE HOL_ATTENDEE_ROLE;   -- in case it was revoked from PUBLIC
 -- Model access: ALL models available in the account, current and future (matters when the account
--- restricts Cortex models with RBAC). Covers the agent's pinned claude-sonnet-4-6 and every model
+-- restricts Cortex models with RBAC). Covers whatever model the agent's auto orchestration picks and every model
 -- in CoCo's picker.
 CALL SNOWFLAKE.MODELS.CORTEX_BASE_MODELS_REFRESH();
 GRANT APPLICATION ROLE SNOWFLAKE."CORTEX-MODEL-ROLE-ALL" TO ROLE HOL_ATTENDEE_ROLE;

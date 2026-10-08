@@ -18,29 +18,31 @@ flowchart LR
     SV --> AG["INSURANCE_CLAIMS_AGENT_#lt;ME#gt;"]
     SV -.lives in.-> LAB
     AG -.lives in.-> LAB
-    AG --> PG["Agents playground /<br/>Snowflake CoWork"]
+    AG --> PG["Agents playground +<br/>Snowflake CoWork"]
 ```
 
 ## Files
 
 | File | Who | Purpose |
 |---|---|---|
-| [`HOL_Insurance_SemanticView_to_CortexAgent.md`](HOL_Insurance_SemanticView_to_CortexAgent.md) | Admin + attendees | The full guide: Part A (admin) and Part B (step-by-step attendee lab with CoCo prompts and verified expected answers) |
+| [`LAB_GUIDE.md`](LAB_GUIDE.md) | Attendees | Step-by-step lab: CoCo prompts and verified expected answers |
+| [`ADMIN_GUIDE.md`](ADMIN_GUIDE.md) | Platform admin | Prerequisites, setup, CoWork notes, teardown, test log |
 | [`admin_setup.sql`](admin_setup.sql) | Platform admin | Creates the role, warehouse, database, sample data (inline, 36–45 rows per table) and grants. Onboards attendee users |
 | [`admin_teardown.sql`](admin_teardown.sql) | Platform admin | Reverts user defaults, revokes the role and drops all lab objects |
 | [`attendee_check_access.sql`](attendee_check_access.sql) | Attendees | Read-only check that every required privilege is in place. Prints the attendee's object names |
+| [`screenshots/`](screenshots/) | Facilitator | Images used in `LAB_GUIDE.md` (see its README for the file names) |
 
 ## Quick start
 
 **Admin (before the lab)**
 1. Open `admin_setup.sql` in a Snowsight SQL file and edit the attendee list in section 4.
 2. Run All. You need ACCOUNTADMIN, SECURITYADMIN and SYSADMIN.
-3. Check the prerequisites in Part A1 of the guide: cross-region inference, the CoCo credit limit, and the model allowlist.
+3. Check the prerequisites in `ADMIN_GUIDE.md`: cross-region inference, the CoCo credit limit, and the model allowlist.
 
 **Attendees**
 1. Run `attendee_check_access.sql` in a Snowsight workspace. Every statement must succeed.
-2. Follow Part B of the guide:
-   - discovery → semantic view → checkpoint → agent → Agents playground tests;
+2. Follow `LAB_GUIDE.md`:
+   - discovery → semantic view → checkpoint → agent → Agents playground → Snowflake CoWork;
    - paste the CoCo prompts as is: CoCo works out your `{MY_SUFFIX}` itself.
 
 **Admin (after the lab)**: run `admin_teardown.sql`.

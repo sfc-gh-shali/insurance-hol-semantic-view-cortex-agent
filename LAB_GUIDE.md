@@ -1,6 +1,6 @@
 # Insurance HOL — Lab Guide: Semantic View → Cortex Agent with CoCo in Snowsight
 
-**50-60 min · Intermediate · everything runs in Snowsight**: no CLI, no local install.
+**55-65 min · Intermediate · everything runs in Snowsight**: no CLI, no local install.
 
 You'll use **CoCo in Snowsight** to explore insurance data, build a semantic view, and create a Cortex Agent that uses it to answer business questions. Then you'll test the agent in the Agents playground and in Snowflake CoWork, where you save and share the result as an artifact.
 
@@ -90,7 +90,7 @@ risk grade, email category and sentiment. Show distinct values and counts.
 
 ---
 
-## Step 3 — Build the semantic view (15 min)
+## Step 3 — Build the semantic view (20 min)
 
 **3.1 Generate**
 ```
@@ -171,6 +171,17 @@ total_paid_amount, fraud_rate, avg_days_to_resolve and total_premium.
 | UMBRELLA | 11 | 28,975 | 0.09 | 29.6 | 3,130 |
 
 If AUTO premium is above 16,300, the joins are fanning out: re-check the relationships and keys from 3.2. If you're stuck, ask CoCo *"Compare my semantic view with these expected numbers and fix what's wrong."*
+
+**3.5 Test with Cortex Analyst (optional).** Before building the agent, check that Cortex Analyst turns natural-language questions into correct SQL over your semantic view.
+1. **AI & ML » Cortex Analyst**, then select `INSURANCE_ANALYTICS_SV_<your suffix>`.
+2. In the chat panel, ask the questions below. Expand each answer to see the generated SQL.
+
+| Question | Expected |
+|---|---|
+| `How many active policies and how much premium do we have by policy type?` | Answered from your **verified query** (the answer is marked as verified) |
+| `What is the average churn risk score by customer risk tier?` | No verified query, so new SQL: PREFERRED 0.430, STANDARD 0.392, NON_STANDARD 0.269, HIGH_RISK 0.239 |
+
+> 💡 If an answer is correct, you can add it as a new verified query. Verified queries are the semantic view's ground truth: Cortex Analyst and your agent reuse them, and Cortex Analyst evaluations score against them.
 
 ---
 
